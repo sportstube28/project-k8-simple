@@ -5,16 +5,15 @@ podTemplate(containers: [
         )
   ]) {
 
-    node(POD_LABEL) {
+     node(POD_LABEL) {
         stage('Get a Maven project') {
-            container('jnlp') {
-                stage('Shell Execution') {
+            git 'https://github.com/dlambrig/simple-java-maven-app.git'
+            container('maven') {
+                stage('Build a Maven project') {
                     sh '''
-                    echo "Hello! I am executing shell"
+                    echo "maven build"
+                    mvn -B -DskipTests clean package
                     '''
-                }
+                    }
             }
         }
-
-    }
-}
